@@ -44,6 +44,13 @@ function Form() {
     }
   }, [formErr]);
 
+  React.useEffect(() => {
+    if (Object.keys(formErr).length !== 0) {
+      setIsSubmit(false);
+      setFormErr(validate(formData));
+    }
+  }, [formData]);
+
   const validate = (values) => {
     const errors = {};
     const regexString = /[a-zA-Z]/i;
