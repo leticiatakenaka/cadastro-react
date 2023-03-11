@@ -1,7 +1,10 @@
 import * as React from "react";
 import * as MU from "@mui/material";
 
-import SortIcon from "@mui/icons-material/Sort";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+import { faSortUp } from "@fortawesome/free-solid-svg-icons/faSortUp";
+import { faSortDown } from "@fortawesome/free-solid-svg-icons/faSortDown";
 
 import { tableCell } from "../../styles";
 
@@ -13,7 +16,7 @@ function ListProducts() {
   const items = JSON.parse(localStorage.getItem("items"));
 
   const [showItems, setShowItems] = React.useState(items);
-  const [order, setOrder] = React.useState(false);
+  const [flag, setFlag] = React.useState(false);
 
   var items2 = [];
 
@@ -21,25 +24,31 @@ function ListProducts() {
     if (items) {
       items2 = items;
     }
-    items2 = items2.sort(function (a, b) {
-      if (a.price > b.price) {
-        return 1;
-      }
-      if (a.price < b.price) {
-        return -1;
-      }
-      return 0;
-    });
-    setOrder(true);
-  };
-
-  React.useEffect(() => {
-    if (order) {
-      setShowItems(items2);
+    if (!flag) {
+      items2 = items2.sort(function (a, b) {
+        if (a.price > b.price) {
+          return 1;
+        }
+        if (a.price < b.price) {
+          return -1;
+        }
+        return 0;
+      });
+      setFlag(true);
     } else {
-      setShowItems(items);
+      items2 = items2.sort(function (a, b) {
+        if (a.price > b.price) {
+          return -1;
+        }
+        if (a.price < b.price) {
+          return 1;
+        }
+        return 0;
+      });
+      setFlag(false);
     }
-  }, []);
+    setShowItems(items2);
+  };
 
   return (
     <>
@@ -50,13 +59,17 @@ function ListProducts() {
               <MU.TableRow>
                 <MU.TableCell>Nome</MU.TableCell>
                 <MU.TableCell style={tableCell}>
-                  Preço&nbsp;(R$)
-                  <MU.Fab size="small" aria-label="add">
-                    <SortIcon
-                      style={{ cursor: "pointer" }}
-                      onClick={sortItems}
-                    />
-                  </MU.Fab>
+                  Preço&nbsp;(R$)&nbsp;
+                  {!flag && (
+                    <MU.Fab size="small" onClick={sortItems}>
+                      <FontAwesomeIcon icon={faSortDown} />
+                    </MU.Fab>
+                  )}
+                  {flag && (
+                    <MU.Fab size="small" onClick={sortItems}>
+                      <FontAwesomeIcon icon={faSortUp} />
+                    </MU.Fab>
+                  )}
                 </MU.TableCell>
               </MU.TableRow>
             </MU.TableHead>
@@ -65,7 +78,9 @@ function ListProducts() {
                 {showItems.map((row, index) => (
                   <MU.TableRow key={index}>
                     <MU.TableCell>{row.name}</MU.TableCell>
-                    <MU.TableCell>{row.price.toLocaleString()}</MU.TableCell>
+                    <MU.TableCell align="right">
+                      {row.price.toLocaleString()}
+                    </MU.TableCell>
                   </MU.TableRow>
                 ))}
               </MU.TableBody>

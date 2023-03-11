@@ -47,12 +47,12 @@ function Form() {
   const validate = (values) => {
     const errors = {};
     const regexString = /[a-zA-Z]/i;
-    const regexNumbers = /^[0-9]/i;
+    const regexNumbers = /^[0-9]+/i;
 
     if (!values.name) {
       errors.name = "Nome do produto é obrigatório!";
     } else if (!regexString.test(values.name)) {
-      errors.name = "O nome deve conter apenas letras!";
+      errors.name = "O nome deve conter letras!";
     }
     if (!values.description) {
       errors.description = "Descrição do produto é obrigatória!";
