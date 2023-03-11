@@ -3,8 +3,8 @@ import * as MU from "@mui/material";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { faSortUp } from "@fortawesome/free-solid-svg-icons/faSortUp";
-import { faSortDown } from "@fortawesome/free-solid-svg-icons/faSortDown";
+import { faArrowDownShortWide } from "@fortawesome/free-solid-svg-icons/faArrowDownShortWide";
+import { faArrowDownWideShort } from "@fortawesome/free-solid-svg-icons/faArrowDownWideShort";
 
 import { tableCell } from "../../styles";
 
@@ -60,15 +60,20 @@ function ListProducts() {
                 <MU.TableCell>Nome</MU.TableCell>
                 <MU.TableCell style={tableCell}>
                   Preço&nbsp;(R$)&nbsp;
-                  {!flag && (
-                    <MU.Fab size="small" onClick={sortItems}>
-                      <FontAwesomeIcon icon={faSortDown} />
-                    </MU.Fab>
-                  )}
-                  {flag && (
-                    <MU.Fab size="small" onClick={sortItems}>
-                      <FontAwesomeIcon icon={faSortUp} />
-                    </MU.Fab>
+                  {!flag ? (
+                    <FontAwesomeIcon
+                      onClick={sortItems}
+                      icon={faArrowDownShortWide}
+                      cursor={"pointer"}
+                      fontSize={"24px"}
+                    />
+                  ) : (
+                    <FontAwesomeIcon
+                      onClick={sortItems}
+                      icon={faArrowDownWideShort}
+                      cursor={"pointer"}
+                      fontSize={"24px"}
+                    />
                   )}
                 </MU.TableCell>
               </MU.TableRow>
@@ -78,7 +83,7 @@ function ListProducts() {
                 {showItems.map((row, index) => (
                   <MU.TableRow key={index}>
                     <MU.TableCell>{row.name}</MU.TableCell>
-                    <MU.TableCell align="right">
+                    <MU.TableCell align="left">
                       {row.price.toLocaleString()}
                     </MU.TableCell>
                   </MU.TableRow>

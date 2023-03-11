@@ -5,8 +5,8 @@ import { useNavigate } from "react-router-dom";
 
 function Form() {
   const [formData, setFormData] = React.useState({
-    name: "",
-    description: "",
+    name: "teste",
+    description: "teste",
     price: "",
     avaliable: true,
   });

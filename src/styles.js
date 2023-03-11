@@ -17,6 +17,6 @@ export const containerStyle = {
 
 export const tableCell = {
   display: "flex",
-  justifyContent: "end",
+  justifyContent: "space-between",
   alignItems: "center",
 };
