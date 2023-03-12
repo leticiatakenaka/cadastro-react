@@ -2,9 +2,11 @@ import * as React from "react";
 import * as MU from "@mui/material";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
 import { faArrowDownShortWide } from "@fortawesome/free-solid-svg-icons/faArrowDownShortWide";
 import { faArrowDownWideShort } from "@fortawesome/free-solid-svg-icons/faArrowDownWideShort";
+
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
 
 import { tableCell } from "../../styles";
 
@@ -19,7 +21,7 @@ function ListProducts() {
   const [flag, setFlag] = React.useState(false);
 
   var items2 = [];
-
+  console.log(showItems);
   const sortItems = () => {
     if (items) {
       items2 = items;
@@ -50,6 +52,15 @@ function ListProducts() {
     setShowItems(items2);
   };
 
+  const removeItem = (i) => {
+    var itemsArray = JSON.parse(localStorage.getItem("items"));
+    itemsArray.splice(i, 1);
+    localStorage.setItem("items", JSON.stringify(itemsArray));
+    setShowItems(itemsArray);
+  };
+
+  const updateItem = (i) => {};
+
   return (
     <>
       <div className="showDiv">
@@ -58,7 +69,9 @@ function ListProducts() {
             <MU.TableHead>
               <MU.TableRow>
                 <MU.TableCell>Nome</MU.TableCell>
-                <MU.TableCell style={tableCell}>
+                <MU.TableCell>Descrição</MU.TableCell>
+                <MU.TableCell>Disponível</MU.TableCell>
+                <MU.TableCell width="150px" style={tableCell}>
                   Preço&nbsp;(R$)&nbsp;
                   {!flag ? (
                     <FontAwesomeIcon
@@ -76,6 +89,8 @@ function ListProducts() {
                     />
                   )}
                 </MU.TableCell>
+                <MU.TableCell></MU.TableCell>
+                <MU.TableCell></MU.TableCell>
               </MU.TableRow>
             </MU.TableHead>
             {showItems && (
@@ -83,8 +98,22 @@ function ListProducts() {
                 {showItems.map((row, index) => (
                   <MU.TableRow key={index}>
                     <MU.TableCell>{row.name}</MU.TableCell>
-                    <MU.TableCell align="left">
-                      {row.price.toLocaleString()}
+                    <MU.TableCell>{row.description}</MU.TableCell>
+                    <MU.TableCell>{row.avaliable ? "SIM" : "NÃO"}</MU.TableCell>
+                    <MU.TableCell>{row.price.toLocaleString()}</MU.TableCell>
+                    <MU.TableCell>
+                      <DeleteIcon
+                        cursor="pointer"
+                        color="error"
+                        onClick={() => removeItem(index)}
+                      />
+                    </MU.TableCell>{" "}
+                    <MU.TableCell>
+                      <DeleteIcon
+                        cursor="pointer"
+                        color="error"
+                        onClick={() => removeItem(index)}
+                      />
                     </MU.TableCell>
                   </MU.TableRow>
                 ))}
@@ -92,7 +121,7 @@ function ListProducts() {
             )}
           </MU.Table>
         </MU.TableContainer>
-        {!showItems && (
+        {(!showItems || showItems.length === 0) && (
           <h4 style={{ color: "red" }}>Por favor, insira um item!</h4>
         )}
         <MU.Button
