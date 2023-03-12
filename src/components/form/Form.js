@@ -40,7 +40,7 @@ function Form() {
       items2.push({ ...formData, price: handlePrice(formData.price) });
 
       localStorage.setItem("items", JSON.stringify(items2));
-      navigate("/list", { state: { formData: formData } });
+      navigate("/list");
     }
   }, [formErr]);
 

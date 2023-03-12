@@ -6,6 +6,7 @@ import { faArrowDownShortWide } from "@fortawesome/free-solid-svg-icons/faArrowD
 import { faArrowDownWideShort } from "@fortawesome/free-solid-svg-icons/faArrowDownWideShort";
 
 import DeleteIcon from "@mui/icons-material/Delete";
+
 import EditIcon from "@mui/icons-material/Edit";
 
 import { tableCell } from "../../styles";
@@ -21,7 +22,7 @@ function ListProducts() {
   const [flag, setFlag] = React.useState(false);
 
   var items2 = [];
-  console.log(showItems);
+
   const sortItems = () => {
     if (items) {
       items2 = items;
@@ -59,7 +60,7 @@ function ListProducts() {
     setShowItems(itemsArray);
   };
 
-  const updateItem = (i) => {};
+  const editItem = (i) => {};
 
   return (
     <>
@@ -102,12 +103,12 @@ function ListProducts() {
                     <MU.TableCell>{row.avaliable ? "SIM" : "NÃO"}</MU.TableCell>
                     <MU.TableCell>{row.price.toLocaleString()}</MU.TableCell>
                     <MU.TableCell>
-                      <DeleteIcon
+                      <EditIcon
                         cursor="pointer"
-                        color="error"
-                        onClick={() => removeItem(index)}
+                        color="warning"
+                        onClick={() => editItem(index)}
                       />
-                    </MU.TableCell>{" "}
+                    </MU.TableCell>
                     <MU.TableCell>
                       <DeleteIcon
                         cursor="pointer"
