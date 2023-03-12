@@ -1,5 +1,5 @@
 export const appStyle = {
-  width: "420px",
+  minWidth: "420px",
   minHeight: "480px",
   background: "#fff",
   padding: "20px 20px",
