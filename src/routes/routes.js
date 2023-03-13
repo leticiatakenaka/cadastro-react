@@ -7,6 +7,7 @@ const Routes = (formData) => {
     <BrowserRouter>
       <Router>
         <Route element={<Form />} path="/" />
+        <Route element={<Form />} path="/:i" />
         <Route element={<ListProducts />} path="/list" />
       </Router>
     </BrowserRouter>

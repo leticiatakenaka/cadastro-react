@@ -54,13 +54,15 @@ function ListProducts() {
   };
 
   const removeItem = (i) => {
-    var itemsArray = JSON.parse(localStorage.getItem("items"));
+    let itemsArray = JSON.parse(localStorage.getItem("items"));
     itemsArray.splice(i, 1);
     localStorage.setItem("items", JSON.stringify(itemsArray));
     setShowItems(itemsArray);
   };
 
-  const editItem = (i) => {};
+  const editItem = (i) => {
+    navigate(`/${i}`);
+  };
 
   return (
     <>

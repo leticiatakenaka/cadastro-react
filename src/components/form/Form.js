@@ -1,15 +1,33 @@
 import * as React from "react";
 import * as MU from "@mui/material";
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 function Form() {
-  const [formData, setFormData] = React.useState({
-    name: "teste",
-    description: "teste",
-    price: "",
-    avaliable: true,
-  });
+  const { i } = useParams();
+  const items = JSON.parse(localStorage.getItem("items"));
+
+  const [isEdit, setIsEdit] = React.useState(false);
+
+  const initialData = () => {
+    if (i) {
+      setIsEdit(true);
+      return {
+        name: items[i].name,
+        description: items[i].description,
+        price: items[i].price,
+        avaliable: items[i].avaliable,
+      };
+    } else {
+      return {
+        name: "teste",
+        description: "teste",
+        price: "",
+        avaliable: true,
+      };
+    }
+  };
+  const [formData, setFormData] = React.useState(initialData);
 
   const [formErr, setFormErr] = React.useState({});
 
@@ -24,7 +42,7 @@ function Form() {
   };
 
   const handlePrice = (price) => {
-    var p = price.replace(",", ".");
+    var p = price.toString().replace(",", ".");
     return parseFloat(p);
   };
 
@@ -38,6 +56,10 @@ function Form() {
       }
 
       items2.push({ ...formData, price: handlePrice(formData.price) });
+
+      if (isEdit) {
+        items2.splice(i, 1);
+      }
 
       localStorage.setItem("items", JSON.stringify(items2));
       navigate("/list");
@@ -123,7 +145,7 @@ function Form() {
       <MU.FormGroup>
         <MU.FormControlLabel
           name="avaliable"
-          control={<MU.Checkbox defaultChecked />}
+          control={<MU.Checkbox checked={formData.avaliable} />}
           label="Disponível para venda"
           value={formData.avaliable}
           onChange={handleCheckBoxChange}
@@ -135,7 +157,7 @@ function Form() {
         variant="outlined"
         onClick={handleSubmit}
       >
-        Cadastrar
+        {isEdit ? "SALVAR" : "CADASTRAR"}
       </MU.Button>
     </MU.Stack>
   );
